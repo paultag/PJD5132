@@ -114,7 +114,12 @@
     (error-status                     (0x07 0x14 0x00 0x05 0x00 0x34 0x00 0x00 0x0C 0x0D 0x66))))
 
 
-(defn writes? [command] (= (get command 3) 0x04))
-(defn reads?  [command] (= (get command 3) 0x05))
+(defn writes?  [command] (= (get command 3) 0x04))
+(defn reads?   [command] (= (get command 3) 0x05))
+
+; (defn protocol-version [command]
+;   "This is a total crapshoot. I only put this here since the model number
+;    is close enough to 5120 (5132)"
+;   (+ (<< 0x14 8) (<< 0x00 0)))
 
 (print (list (map (fn [(, x y)] (, x (writes? y) (reads? y))) *commands*)))
