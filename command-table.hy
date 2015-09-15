@@ -113,6 +113,7 @@
     (error-status                     (0x07 0x14 0x00 0x05 0x00 0x34 0x00 0x00 0x0C 0x0D 0x66))))
 
 
-(defn writes? [command] (= (first command) 0x07))
-(defn reads?  [command] (= (first command) 0x06))
+(defn writes? [command] (= (first command) 0x06))
+(defn reads?  [command] (= (first command) 0x07))
 
+(print (list (map (fn [(, x y)] (, x (writes? y) (reads? y))) *commands*)))
