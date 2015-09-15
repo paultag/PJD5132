@@ -120,5 +120,3 @@
 ;   "This is a total crapshoot. I only put this here since the model number
 ;    is close enough to 5120 (5132)"
 ;   (+ (<< 0x14 8) (<< 0x00 0)))
-
-(print (list (map (fn [(, x y)] (, x (writes? y) (reads? y))) *commands*)))
