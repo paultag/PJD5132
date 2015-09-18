@@ -10,7 +10,10 @@
     (self.serial.write (bytearray command))
     (self.serial.flush)
     (if (reads? command)
-      (do))))
+      (do (setv len (get (self.serial.read 1) 0))
+          (setv model (self.serial.read 2))  ; assert model check
+          (self.serial.read (+ len 1)))
+      nil)))
 
 ;; 
 (defmacro $ [name stat &rest methods]
