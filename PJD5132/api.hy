@@ -1,7 +1,7 @@
 ;;
 ;;
 
-(import serial [PJD5132.commands [reads? writes?]])
+(import serial [PJD5132.commands [reads? writes? describe protocol-version]])
 
 
 (defclass Command [] []
@@ -11,8 +11,9 @@
     (self.serial.flush)
     (if (reads? command)
       (do (setv len (get (self.serial.read 1) 0))
-          (setv model (self.serial.read 2))  ; assert model check
-          (self.serial.read (+ len 1)))
+          (if (!= (protocol-version (self.serial.read 2)) 5120)
+            (raise (ValueError "Bad protocol version")))
+          (describe (self.serial.read (+ len 1))))
       nil)))
 
 ;; 
