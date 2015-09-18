@@ -5,7 +5,7 @@
 
 
 (defclass Command [] []
-  (defn --init-- [self] (setv self.serial (serial.Serial "/dev/ttyACM0" 115200)) nil)
+  (defn --init-- [self serial] (setv self.serial serial) nil)
   (defn send-command [self command]
     (self.serial.write (bytearray command))
     (self.serial.flush)))
