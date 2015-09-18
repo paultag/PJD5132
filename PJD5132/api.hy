@@ -9,12 +9,12 @@
   (defn send-command [self command]
     (self.serial.write (bytearray command))
     (self.serial.flush)
-    (if (reads? command)
-      (do (setv len (get (self.serial.read 1) 0))
-          (if (!= (protocol-version (self.serial.read 2)) 5120)
-            (raise (ValueError "Bad protocol version")))
-          (describe (self.serial.read (+ len 1))))
-      nil)))
+    ; (if (reads? command)
+    ;   (do (setv len (get (self.serial.read 1) 0))
+    ;       (protocol-version (self.serial.read 2))
+    ;       (describe (self.serial.read (+ len 1))))
+    ;   nil)))
+    nil))
 
 ;; 
 (defmacro $ [name stat &rest methods]
