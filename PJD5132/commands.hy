@@ -121,7 +121,6 @@
 (defn writes?  [command] (= (get command 3) 0x04))
 (defn reads?   [command] (= (get command 3) 0x05))
 
-
 (defn octet [data]
   (setv ret 0)
   (for [(, step num) (enumerate data)]
