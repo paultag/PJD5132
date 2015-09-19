@@ -123,17 +123,3 @@
 (defn describe [const] const) ;  (.get *const-map* const const))
 (defn writes?  [command] (= (get command 3) 0x04))
 (defn reads?   [command] (= (get command 3) 0x05))
-
-(defn octet [data &optional [big false]]
-  (setv ret 0)
-  (if big (setv data (reversed data)))
-  (for [(, step num) (enumerate data)]
-    (setv ret (+ ret (<< num (* step 8)))))
-  ret)
-
-(defn octet/big [data]
-  (octet data true))
-
-
-(defn octet/little [data]
-  (octet data false))
