@@ -1,20 +1,26 @@
 ;;
 ;;
 
-(import serial [PJD5132.commands [reads? writes? describe protocol-version]])
+(import serial [PJD5132.commands [reads? writes? describe octet]])
 
 
 (defclass Command [] []
   (defn --init-- [self serial] (setv self.serial serial) nil)
+  (defn read-response [self]
+      (setv flavor   (octet (self.serial.read 1)))
+      (setv protocol (octet (self.serial.read 2)))
+      (setv length   (octet (self.serial.read 2)))
+      (setv payload         (self.serial.read length))
+      (setv checksum        (self.serial.read 1))
+      (if (!= protocol 20)
+              (raise (ValueError (.format "Bad protocol version: Type {}"
+                                          protocol))))
+      payload)
+
   (defn send-command [self command]
     (self.serial.write (bytearray command))
     (self.serial.flush)
-    ; (if (reads? command)
-    ;   (do (setv len (get (self.serial.read 1) 0))
-    ;       (protocol-version (self.serial.read 2))
-    ;       (describe (self.serial.read (+ len 1))))
-    ;   nil)))
-    nil))
+    (self.read-response)))
 
 ;; 
 (defmacro $ [name stat &rest methods]

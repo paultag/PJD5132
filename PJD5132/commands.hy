@@ -1,11 +1,6 @@
 ;; TODO: 3D Sync, 3D Sync Invert
 
 
-(setv *consts*
-  '((true     (0x03 0x00 0x00 0x00 0x01 0x18))
-    (false    (0x03 0x00 0x00 0x00 0x00 0x17))))
-
-
 (setv *commands*
   '((power-on                         (0x06  0x14 0x00  0x04  0x00 0x34 0x11 0x00 0x00 0x5D))
     (power-off                        (0x06  0x14 0x00  0x04  0x00 0x34 0x11 0x01 0x00 0x5E))
@@ -119,14 +114,16 @@
     (error-status                     (0x07  0x14 0x00  0x05  0x00 0x34 0x00 0x00 0x0C 0x0D 0x66))))
 
 (setv *command-map* (dict *commands*))
-(setv *const-map* (dict (genexpr (, (bytes (get x 1)) (get x 0)) [x *consts*])))
+; (setv *const-map* (dict (genexpr (, (bytes (get x 1)) (get x 0)) [x *consts*])))
 
 
-(defn describe [const]   (.get *const-map* const const))
+(defn describe [const] const) ;  (.get *const-map* const const))
 (defn writes?  [command] (= (get command 3) 0x04))
 (defn reads?   [command] (= (get command 3) 0x05))
 
-(defn protocol-version [command]
-  "This is a total crapshoot. I only put this here since the model number
-   is close enough to 5120 (5132)"
-  (+ (<< (get command 0) 8) (<< (get command 1) 0)))
+
+(defn octet [data]
+  (setv ret 0)
+  (for [(, step num) (enumerate data)]
+    (setv ret (+ ret (<< num (* step 8)))))
+  ret)
