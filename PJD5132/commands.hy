@@ -120,9 +120,6 @@
 (setv *command-map*   (dict (selector *commands* 0 2)))
 (setv *command-types* (dict (selector *commands* 0 1)))
 
-; (setv *const-map* (dict (genexpr (, (bytes (get x 1)) (get x 0)) [x *consts*])))
-
-
 (defn describe [const] const) ;  (.get *const-map* const const))
 (defn writes?  [command] (= (get command 3) 0x04))
 (defn reads?   [command] (= (get command 3) 0x05))
@@ -136,3 +133,7 @@
 
 (defn octet/big [data]
   (octet data true))
+
+
+(defn octet/little [data]
+  (octet data false))
