@@ -15,7 +15,9 @@
       (if (!= protocol 20)
               (raise (ValueError (.format "Bad protocol version: Type {}"
                                           protocol))))
-      payload)
+      (if (!= (len payload) 0)
+        payload
+        nil))
 
   (defn send-command [self command]
     (self.serial.write (bytearray command))
