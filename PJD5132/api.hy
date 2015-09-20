@@ -6,11 +6,11 @@
 
 
 (defn read-response/raw [serial]
-  (let [[flavor   (octet (serial.read 1))]
-        [protocol (octet (serial.read 2))]
-        [length   (octet (serial.read 2))]
-        [payload         (serial.read length)]
-        [checksum        (serial.read 1)]]
+  (let [[flavor   (octet/little (serial.read 1))]
+        [protocol (octet/little (serial.read 2))]
+        [length   (octet/little (serial.read 2))]
+        [payload                (serial.read length)]
+        [checksum               (serial.read 1)]]
     (if (!= protocol 20)
         (raise (ValueError #L"Bad protocol version: Type {protocol}")))
     (if (!= (len payload) 0)
@@ -34,7 +34,7 @@
     body))
 
 
-(defn octet [data &optional big]
+(defn octet [data big]
   (setv ret 0)
   (if big (setv data (reversed data)))
   (for [(, step num) (enumerate data)]
