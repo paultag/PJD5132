@@ -18,7 +18,7 @@
       nil)))
 
 (defn read-response/typed [serial type]
-  (if (= 'nil type)
+  (if (is nil type)
       (read-response/raw serial)
       (type (read-response/raw serial))))
 
