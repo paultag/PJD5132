@@ -115,7 +115,7 @@
 
 (defn selector [stream key value]
   (for [line stream]
-    (yield [ (get line key) (get line value)])))
+    (yield [(get line key) (get line value)])))
 
 (setv *command-map*   (dict (selector *commands* 0 2)))
 (setv *command-types* (dict (selector *commands* 0 1)))
