@@ -49,9 +49,9 @@
 
 (defroute aspect-ratio
   aspect-ratio-status
+  ("auto"  aspect-ratio-auto)
   ("4:3"   aspect-ratio-4/3)
   ("16:9"  aspect-ratio-16/9)
-  ("16:10" aspect-ratio-16/10)
   ("wide"  aspect-ratio-wide))
 
 
