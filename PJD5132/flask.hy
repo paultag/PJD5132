@@ -76,10 +76,10 @@
   ("decrease" volume-decrease))
 
 
-(defroute brightness
-  brightness-status
-  ("increase" brightness-increase)
-  ("decrease" brightness-increase))
+; (defroute brightness
+;   brightness-status
+;   ("increase" brightness-increase)
+;   ("decrease" brightness-increase))
 
 
 (defroute freeze
