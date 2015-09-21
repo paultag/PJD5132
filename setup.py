@@ -13,6 +13,11 @@ setup(
     description='n/a',
     license="GPL-3.0+",
     install_requires=["hy",],
+    entry_points={
+        'console_scripts': [
+            'PJD5132 = PJD5132.cli:PJD5132',
+        ]
+    },
     url="",
     platforms=['any']
 )
