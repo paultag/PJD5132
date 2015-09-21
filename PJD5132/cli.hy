@@ -4,5 +4,4 @@
 
 (defn PJD5132 []
   (print (.json (requests.get (.format "http://{}/projector/{}"
-            host (apply os.path.join (get sys.argv (slice 1 nil)))))
-         )))
+            host (apply os.path.join (get sys.argv (slice 1 nil))))))))
