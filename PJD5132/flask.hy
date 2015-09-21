@@ -1,4 +1,4 @@
-(import serial [flask [Flask request make-response]])
+(import json serial [flask [Flask request make-response]])
 
 (setv app (Flask --name--))
 
@@ -22,7 +22,7 @@
 
        (try (do (setv ret (~method serial-line))
                ~(if status `(setv ret (~status serial-line)))
-                (repr ret))
+                (json.dumps ret))
        (except [e ValueError]
           (setv response (make-response (.format "Fatal Error: ValueError: {}" (str e))))
           (setv response.status-code 500)
