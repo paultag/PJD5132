@@ -5,12 +5,24 @@
 (defreader L [expr] `(apply .format [~expr] (locals)))
 
 
+(defn read-length [serial length]
+  (setv buf (serial.read length))
+  (if (= (len buf) length)
+    buf
+    (raise (ValueError (.format
+      "Short read: Expected {} got {}"
+      length (len buf))))))
+
+
 (defn read-response/raw [serial]
-  (let [[flavor   (octet/little (serial.read 1))]
-        [protocol (octet/little (serial.read 2))]
-        [length   (octet/little (serial.read 2))]
-        [payload                (serial.read length)]
-        [checksum               (serial.read 1)]]
+  (let [[flavor   (octet/little (read-length serial 1))]
+        [protocol (octet/little (read-length serial 2))]
+        [length   (octet/little (read-length serial 2))]
+        [payload                (read-length serial length)]
+        [checksum               (read-length serial 1)]]
+
+
+
     (if (!= protocol 20)
         (raise (ValueError #L"Bad protocol version: Type {protocol}")))
     (if (!= (len payload) 0)
