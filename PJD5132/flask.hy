@@ -11,6 +11,7 @@
                       :baudrate 115200))
 
 
+
 (defmacro defroute [name root &rest methods]
   (import os.path)
 
@@ -27,7 +28,9 @@
           (setv response.status-code 500)
           response)))))
 
-  (setv path (.format "/projector/{}" name))
+  ; (setv path (.format "/projector/{}" name))
+  (setv path (.format "/{}" name))
+
   (setv actions (dict methods))
   `(do ~(generate-method path root nil)
        ~@(list-comp (generate-method (os.path.join path method-path) method root)
